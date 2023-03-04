@@ -306,6 +306,9 @@ public abstract class BaseOpenMessage extends OpenMessage {
             case BURGLAR_ALARM:
                 baseopenmsg = new Alarm(frame);
                 break;
+            case SOUND_SYSTEM_2:
+                baseopenmsg = new SoundSystem(frame);
+                break;
             default:
                 break;
         }

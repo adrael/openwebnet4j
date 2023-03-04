@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.11.0] - 2023-xx-xx
+
+### Added
+
+- Sound Diffusion: support for sound systems (WHO=22)
+
 ## [0.10.0] - 2023-xx-xx
 
 ### Added
