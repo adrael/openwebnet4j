@@ -46,7 +46,7 @@ public abstract class OpenGateway implements ConnectorListener {
 
     private static final int RECONNECT_RETRY_AFTER = 2500; // ms
     private static final int RECONNECT_RETRY_AFTER_MAX = 60000; // ms
-    private static final int RECCONECT_RETRY_MULTIPLIER = 2;
+    private static final int RECONNECT_RETRY_MULTIPLIER = 2;
     private boolean connectionCloseRequested = false;
 
     protected byte[] macAddr;
@@ -131,7 +131,7 @@ public abstract class OpenGateway implements ConnectorListener {
                     throw ae;
                 } catch (OWNException e) {
                     logger.debug("--Error while re-connecting: {}", e.getMessage());
-                    retry = retry * RECCONECT_RETRY_MULTIPLIER;
+                    retry = retry * RECONNECT_RETRY_MULTIPLIER;
                     if (retry >= RECONNECT_RETRY_AFTER_MAX) {
                         retry = RECONNECT_RETRY_AFTER_MAX;
                     }

@@ -90,41 +90,6 @@ public class SoundSystem extends BaseOpenMessage {
         return WhatSoundSystem.fromValue(i);
     }
 
-    public enum SpeakerOrSourceSoundSystem {
-        SOURCE(2),
-        SPEAKER(3);
-
-        private static Map<Integer, SpeakerOrSourceSoundSystem> mapping;
-
-        private final int value;
-
-        private SpeakerOrSourceSoundSystem(int value) {
-            this.value = value;
-        }
-
-        private static void initMapping() {
-            mapping = new HashMap<Integer, SpeakerOrSourceSoundSystem>();
-            for (SpeakerOrSourceSoundSystem w : values()) {
-                mapping.put(w.value, w);
-            }
-        }
-
-        public static SpeakerOrSourceSoundSystem fromValue(int i) {
-            if (mapping == null) {
-                initMapping();
-            }
-            return mapping.get(i);
-        }
-
-        public Integer value() {
-            return value;
-        }
-    }
-
-    protected SpeakerOrSourceSoundSystem speakerOrSourceFromValue(int i) {
-        return SpeakerOrSourceSoundSystem.fromValue(i);
-    }
-
     public enum FrequencyStepSoundSystem {
         FIFTY_HZ(1),
         ONE_HUNDRED_HZ(2),
@@ -376,6 +341,14 @@ public class SoundSystem extends BaseOpenMessage {
         return new SoundSystem(format(FORMAT_DIMENSION_REQUEST, WHO, device, DimSoundSystem.VOLUME.value()));
     }
 
+    public static SoundSystem requestFrequency(SoundSystemDevice device) {
+        return new SoundSystem(format("*#%d*%s#%s#%s*%s##", WHO, WhereSoundSystem.GENERAL.value(), WhereSoundSystem.SOURCE.value(), device.getSourceId(), DimSoundSystem.FREQUENCY.value()));
+    }
+
+    public static SoundSystem requestStationOrTrack(SoundSystemDevice device) {
+        return new SoundSystem(format("*#%d*%s#%s#%s*%s##", WHO, WhereSoundSystem.GENERAL.value(), WhereSoundSystem.SOURCE.value(), device.getSourceId(), DimSoundSystem.TRACK_STATION.value()));
+    }
+
     public static SoundSystem requestStatus(String where) {
         return new SoundSystem(format(FORMAT_STATUS, WHO, where));
     }
@@ -397,11 +370,11 @@ public class SoundSystem extends BaseOpenMessage {
     }
 
     public boolean isSpeaker() {
-        return whereStr.startsWith(SpeakerOrSourceSoundSystem.SPEAKER.value().toString());
+        return whereStr.startsWith(WhereSoundSystem.SPEAKER.value());
     }
 
     public boolean isSource() {
-        return whereStr.startsWith(SpeakerOrSourceSoundSystem.SOURCE.value().toString());
+        return whereStr.startsWith(WhereSoundSystem.SOURCE.value());
     }
 
     public boolean isOn() throws FrameException {
@@ -483,6 +456,10 @@ public class SoundSystem extends BaseOpenMessage {
         }
 
         return null;
+    }
+
+    public SoundSystemDevice getDevice() {
+        return SoundSystemDevice.fromWhere(getWhere());
     }
 
     @Override

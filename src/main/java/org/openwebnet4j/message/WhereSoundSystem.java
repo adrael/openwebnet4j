@@ -20,7 +20,16 @@ package org.openwebnet4j.message;
  * @author R. Marques - Initial contribution
  */
 public class WhereSoundSystem extends Where {
-    public static final Where GENERAL = new WhereSoundSystem("5#2#1");
+    public static final WhereSoundSystem SOURCE = new WhereSoundSystem("2");
+    public static final WhereSoundSystem SPEAKER = new WhereSoundSystem("3");
+    public static final WhereSoundSystem SPEAKER_AREA = new WhereSoundSystem("4");
+    public static final WhereSoundSystem GENERAL = new WhereSoundSystem("5");
+    public static final WhereSoundSystem ALL_SOURCE = new WhereSoundSystem("6");
+
+    public static final String FORMAT_SOURCE = "2#%s";
+    public static final String FORMAT_SPEAKER = "3#%s#%s";
+    public static final String FORMAT_SPEAKER_AREA = "4#%s";
+    public static final String FORMAT_GENERAL = "5#%s"; // s is sender address e.g. 2#1
 
     public WhereSoundSystem(String w) throws NullPointerException {
         // TODO check range for WHERE
